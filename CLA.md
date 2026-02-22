@@ -10,3 +10,4 @@ By signing below, I agree to the following:
    a copyright transfer.
 4. I confirm that I am the author of my contributions and have the right
    to grant these permissions.
+5. coding sucks please dont look at this fork i beg you OH MY GOD
