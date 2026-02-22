@@ -12,6 +12,7 @@
 
 ## The Goals
 
+your mom hahahaha
 As the overall community of Horizon, we commit to making participation in open-source software open to all, free from harassment or other demeaning behavior.
 
 We build free software for everyone, made possible by the time, effort, and support of countless people, including the people who use Horizon. That only works when people feel safe, respected, and able to collaborate without fear of hostility, discrimination, or retaliation.
