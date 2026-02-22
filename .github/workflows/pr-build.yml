@@ -75,9 +75,10 @@ jobs:
         if: matrix.platform == 'linux'
         env:
           PR_VERSION: ${{ steps.info.outputs.version }}
+          BUILD_ARCH: ${{ matrix.arch }}
         run: |
           chmod +x electron/release-scripts/linux-dev.sh
-          electron/release-scripts/linux-dev.sh "$PR_VERSION" "$GITHUB_WORKSPACE/release_artifacts/linux/$PR_VERSION"
+          electron/release-scripts/linux-dev.sh "$PR_VERSION" "$GITHUB_WORKSPACE/release_artifacts/linux/$PR_VERSION" "$BUILD_ARCH"
 
       - name: Run Build Script (macOS)
         if: matrix.platform == 'macos'
@@ -91,9 +92,10 @@ jobs:
         if: matrix.platform == 'windows'
         env:
           PR_VERSION: ${{ steps.info.outputs.version }}
+          BUILD_ARCH: ${{ matrix.arch }}
         shell: pwsh
         run: |
-          .\electron\release-scripts\windows-dev.ps1 -ReleaseVersion "$env:PR_VERSION" -ReleasePath "$env:GITHUB_WORKSPACE\release_artifacts\windows\$env:PR_VERSION"
+          .\electron\release-scripts\windows-dev.ps1 -ReleaseVersion "$env:PR_VERSION" -ReleasePath "$env:GITHUB_WORKSPACE\release_artifacts\windows\$env:PR_VERSION" -Arch "$env:BUILD_ARCH"
 
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
