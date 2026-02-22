@@ -25,7 +25,10 @@ jobs:
             arch: arm64
           - os: macos-26
             platform: macos
-            arch: universal
+            arch: x64
+          - os: macos-26
+            platform: macos
+            arch: arm64
           - os: windows-latest
             platform: windows
             arch: x64
@@ -84,9 +87,10 @@ jobs:
         if: matrix.platform == 'macos'
         env:
           PR_VERSION: ${{ steps.info.outputs.version }}
+          BUILD_ARCH: ${{ matrix.arch }}
         run: |
           chmod +x electron/release-scripts/macos-dev.sh
-          electron/release-scripts/macos-dev.sh "$PR_VERSION" "$GITHUB_WORKSPACE/release_artifacts/macos/$PR_VERSION"
+          electron/release-scripts/macos-dev.sh "$PR_VERSION" "$GITHUB_WORKSPACE/release_artifacts/macos/$PR_VERSION" "$BUILD_ARCH"
 
       - name: Run Build Script (Windows)
         if: matrix.platform == 'windows'
