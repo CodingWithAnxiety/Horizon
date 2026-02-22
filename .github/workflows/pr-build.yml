@@ -1,7 +1,7 @@
 name: PR Build
 
 permissions:
-  contents: read
+  contents: write
   pull-requests: write
 
 on:
@@ -93,69 +93,15 @@ jobs:
           path: release_artifacts/**
           retention-days: 14
 
-  comment:
+  link:
     name: Post Download Links
     needs: build
     runs-on: ubuntu-latest
     if: always() && needs.build.result == 'success'
     permissions:
+      contents: write
       pull-requests: write
     steps:
-      - name: Build PR Comment
-        id: comment_body
-        run: |
-          SHA='${{ needs.build.outputs.sha }}'
-          ARTIFACTS_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}#artifacts"
-
-          EOF_MARKER=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
-          echo "body<<${EOF_MARKER}" >> $GITHUB_OUTPUT
-          cat >> $GITHUB_OUTPUT <<COMMENT_END
-          ## Test Builds Ready
-
-          **Commit:** \`${SHA}\`
-
-          | Platform | Artifact |
-          |----------|----------|
-          | Linux | [AppImage](${ARTIFACTS_URL}) |
-          | Windows | [Portable EXE](${ARTIFACTS_URL}) |
-          | macOS | [ZIP (universal)](${ARTIFACTS_URL}) |
-
-          > Download from the [workflow artifacts](${ARTIFACTS_URL}). Expires in 14 days.
-          COMMENT_END
-          echo "${EOF_MARKER}" >> $GITHUB_OUTPUT
-
-      - name: Preview Comment
-        run: |
-          echo "--- PR Comment Preview ---"
-          echo "${{ steps.comment_body.outputs.body }}"
-          echo "---"
-
-      - name: Post or Update PR Comment
-        if: ${{ !env.ACT }}
-        uses: actions/github-script@v7
+      - uses: beni69/artifact-link@v1
         with:
-          script: |
-            const body = `${{ steps.comment_body.outputs.body }}`;
-            const prNumber = context.issue.number;
-
-            const { data: comments } = await github.rest.issues.listComments({
-              ...context.repo,
-              issue_number: prNumber,
-            });
-            const botComment = comments.find(c =>
-              c.user.type === 'Bot' && c.body.includes('Test Builds Ready')
-            );
-
-            if (botComment) {
-              await github.rest.issues.updateComment({
-                ...context.repo,
-                comment_id: botComment.id,
-                body,
-              });
-            } else {
-              await github.rest.issues.createComment({
-                ...context.repo,
-                issue_number: prNumber,
-                body,
-              });
-            }
+          token: ${{ github.token }}
