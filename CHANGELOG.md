@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html). You can also read it on our [website](https://fchat-horizon.github.io/docs/changelog.html).
 
+
+this suscks this sucks sucsksc ssuckskasskjafsjkhlfhjnkahjlafwhjklafshjk; fashjkafshkjlfashkj 
 # [Unreleased]
 
 ## [1.36.0] 19-02-2026
