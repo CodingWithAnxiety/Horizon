@@ -72,7 +72,7 @@ Horizon aims to be an opinionated fork of F-Chat Rising. Instead of aiming solel
   Establish a solid base that can be easily adapted for future forks with different objectives.
 
 - **Retain Core Features**  
-  Maintain _all core_ functionality from the original _Rising_ project.
+  Maintain *all core* functionality from the original _Rising_ project.
 
 It should be known that this project aligns closely with the ideaology of [KDE](https://manifesto.kde.org)
 
