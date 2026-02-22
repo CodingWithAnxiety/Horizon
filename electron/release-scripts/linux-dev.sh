@@ -30,8 +30,7 @@ rm -rf "$DIST_PATH"
 cd electron
 rm -rf app dist
 mkdir -p "$DIST_PATH"
-pnpm run webpack:dev
-node build/build.mjs --os linux --format AppImage
+pnpm build:dev:linux
 
 # & Prepare release directory
 mkdir -p "$RELEASE_PATH"

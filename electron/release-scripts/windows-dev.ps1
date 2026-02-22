@@ -40,8 +40,7 @@ pnpm install --frozen-lockfile
 # Build the project
 Set-Location electron
 Remove-Item -Recurse -Force app, dist -ErrorAction SilentlyContinue
-pnpm run webpack:dev
-node build/build.mjs --os windows --format portable
+pnpm build:dev:win
 
 # Prepare release directory
 New-Item -ItemType Directory -Path $ReleasePath -Force | Out-Null

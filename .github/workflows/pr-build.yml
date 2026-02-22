@@ -12,17 +12,26 @@ on:
 
 jobs:
   build:
-    name: Build (${{ matrix.platform }})
+    name: Build (${{ matrix.platform }}-${{ matrix.arch }})
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         include:
           - os: ubuntu-latest
             platform: linux
+            arch: x64
+          - os: ubuntu-latest
+            platform: linux
+            arch: arm64
           - os: macos-26
             platform: macos
+            arch: universal
           - os: windows-latest
             platform: windows
+            arch: x64
+          - os: windows-latest
+            platform: windows
+            arch: arm64
     outputs:
       sha: ${{ steps.info.outputs.sha }}
     steps:
@@ -89,7 +98,7 @@ jobs:
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Horizon-PR${{ github.event.pull_request.number }}-${{ steps.info.outputs.sha }}-${{ matrix.platform }}
+          name: Horizon-PR${{ github.event.pull_request.number }}-${{ steps.info.outputs.sha }}-${{ matrix.platform }}-${{ matrix.arch }}
           path: release_artifacts/**
           retention-days: 14
 
